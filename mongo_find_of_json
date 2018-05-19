@@ -1,0 +1,17 @@
+#!/usr/bin/python
+# -*- coding: utf8 -*-
+import os,sys
+
+import pymongo
+from pymongo import MongoClient
+from bson.objectid import ObjectId
+
+mongoClient = MongoClient('192.168.18.162',27017)
+db = mongoClient.testdb
+collection = db.object
+
+strCondition = """{'_id':ObjectId('111000000015afe48d900000')}"""
+condition = eval(strCondition) #eval 是重点，去掉引号，这样就能把可以把检索条件拼成json然后再转成bson进行检索
+
+collections = collection.find(condition).count()
+print(collections)
